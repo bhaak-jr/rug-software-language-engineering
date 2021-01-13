@@ -4,8 +4,7 @@ import AST;
 
 /*
  * Name resolution for QL
- */ 
-
+ */
 
 // modeling declaring occurrences of names
 alias Def = rel[str name, loc def];
@@ -17,18 +16,18 @@ alias UseDef = rel[loc use, loc def];
 
 // the reference graph
 alias RefGraph = tuple[
-  Use uses, 
-  Def defs, 
+  Use uses,
+  Def defs,
   UseDef useDef
-]; 
+];
 
 RefGraph resolve(AForm f) = <us, ds, us o ds>
   when Use us := uses(f), Def ds := defs(f);
 
 Use uses(AForm f) {
-  return {}; 
+  return { <e.id.src, e.id.name> | /AExpr e := f, e has id };
 }
 
 Def defs(AForm f) {
-  return {}; 
+  return { <q.def.name, q.def.src> | /AQuestion q := f, q has def };
 }
