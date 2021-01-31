@@ -32,9 +32,9 @@ set[Message] check(AForm f, TEnv tenv, UseDef useDef)
 // - Duplicate labels (warning)
 set[Message] check(AQuestion q, TEnv tenv, UseDef useDef)
   = { error("Type mismatch between declared questions with same name", q.src)
-    | t <- tenv, q has def, t.name == q.def.name, t.\type != toType(q.\type), t.def == q.def.src }
+    | t <- tenv, q has def, t.name == q.def.name, t.\type != toType(q.\type), t.def != q.def.src }
   + { error("Type mismatch between question and assigned expression", q.src)
-    | t <- tenv, q has expr, t.def == q.src, t.\type != typeOf(q.expr, tenv, useDef) }
+    | t <- tenv, q has expr, t.def == q.def.src, t.\type != typeOf(q.expr, tenv, useDef) }
   + { error("Condition is not of the type Boolean", q.condition.src)
     | q has condition && typeOf(q.condition, tenv, useDef) != tbool() }
   + { warning("Declared questions with duplicate labels", q.src)
