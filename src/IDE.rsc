@@ -6,6 +6,7 @@ import CST2AST;
 import Resolve;
 import Check;
 import Compile;
+import Transform;
 
 import util::IDE;
 import Message;
@@ -37,8 +38,8 @@ void main() {
         AForm ast = cst2ast(pt);
         UseDef useDef = resolve(ast).useDef;
         set[Message] msgs = check(ast, collect(ast), useDef);
-        if (msgs == {}) {
-          compile(ast);
+        if (!(error(str _, loc _) <- msgs)) {
+          compile(flatten(ast));
         }
         return msgs;
       }
