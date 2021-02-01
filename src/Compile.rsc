@@ -65,7 +65,7 @@ str form2js(AForm f) =
   '  item.addEventListener(\'input\', update);
   '})
   '
-  'update();\n";
+  'update();\n"; // TODO: place the static section of this string in a separate js file
 
 str question2js(AQuestion q) {
   str js = "";
@@ -94,36 +94,36 @@ str question2js(list[AQuestion] qs, AExpr e) =
 
 str expr2js(AExpr e) {
   switch (e) {
-    case ref(id(str x)): return "getValue(\'_<x>\')";
-    case \bool(bool b): return "<b>";
-    case \int(int n): return "<n>";
-    case \str(str s): return "<s>";
+    case ref(id(str x)): return "(getValue(\'_<x>\'))";
+    case \bool(bool b): return "(<b>)";
+    case \int(int n): return "(<n>)";
+    case \str(str s): return "(<s>)";
     case par(AExpr e): return "(<expr2js(e)>)";
-    case not(AExpr e): return "!<expr2js(e)>";
+    case not(AExpr e): return "(!<expr2js(e)>)";
     case mul(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> * <expr2js(rhs)>";
+      return "(<expr2js(lhs)> * <expr2js(rhs)>)";
     case div(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> / <expr2js(rhs)>";
+      return "(<expr2js(lhs)> / <expr2js(rhs)>)";
     case add(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> + <expr2js(rhs)>";
+      return "(<expr2js(lhs)> + <expr2js(rhs)>)";
     case sub(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> - <expr2js(rhs)>";
+      return "(<expr2js(lhs)> - <expr2js(rhs)>)";
     case le(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> \< <expr2js(rhs)>";
+      return "(<expr2js(lhs)> \< <expr2js(rhs)>)";
     case leq(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> \<= <expr2js(rhs)>";
+      return "(<expr2js(lhs)> \<= <expr2js(rhs)>)";
     case gr(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> \> <expr2js(rhs)>";
+      return "(<expr2js(lhs)> \> <expr2js(rhs)>)";
     case geq(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> \>= <expr2js(rhs)>";
+      return "(<expr2js(lhs)> \>= <expr2js(rhs)>)";
     case eq(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> === <expr2js(rhs)>";
+      return "(<expr2js(lhs)> === <expr2js(rhs)>)";
     case neq(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> !== <expr2js(rhs)>";
+      return "(<expr2js(lhs)> !== <expr2js(rhs)>)";
     case and(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> && <expr2js(rhs)>";
+      return "(<expr2js(lhs)> && <expr2js(rhs)>)";
     case or(AExpr lhs, AExpr rhs):
-      return "<expr2js(lhs)> || <expr2js(rhs)>";
+      return "(<expr2js(lhs)> || <expr2js(rhs)>)";
     default: throw "Unsupported expression <e>";
   }
 }

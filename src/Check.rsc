@@ -54,6 +54,7 @@ set[Message] check(ref(AId x), TEnv tenv, UseDef useDef)
   = { error("Undeclared question", x.src) | useDef[x.src] == {} };
 default set[Message] check(AExpr e, TEnv tenv, UseDef useDef)
   = { error("Unknown expression type", e.src) | typeOf(e, tenv, useDef) == tunknown() };
+  // TODO: Add specialized messages for every kind of expression
 
 Type typeOf(ref(id(_, src = loc u)), TEnv tenv, UseDef useDef) = t
   when <u, loc d> <- useDef, <d, _, _, Type t> <- tenv;
